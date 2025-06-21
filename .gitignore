@@ -5,7 +5,10 @@ __pycache__/
 
 # C extensions
 *.so
-
+*.pyc
+__pycache__/
+.env
+google_creds.json
 # Distribution / packaging
 .Python
 build/
