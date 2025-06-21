@@ -1,11 +1,13 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-from config import GOOGLE_CREDS_DICT
+import os
+import json
 
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_dict(GOOGLE_CREDS_DICT, scope)
-client = gspread.authorize(creds)
+def write_to_sheet(data):
+    creds_dict = json.loads(os.environ["GOOGLE_CREDS_JSON"])
+    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
+    client = gspread.authorize(creds)
 
-def write_to_sheet(name, email, phone, interest):
-    sheet = client.open("PojoTech Leads").sheet1
-    sheet.append_row([name, email, phone, interest])
+    sheet = client.open("Pojo Leads").sheet1  # Replace with your actual sheet name
+    sheet.append_row(data)
