@@ -1,18 +1,18 @@
 import os
-import json
 from dotenv import load_dotenv
+import json
 
 load_dotenv()
 
-# Fallback in case GOOGLE_CREDS_JSON is not properly set
-GOOGLE_CREDS_DICT = {}
+SMTP_EMAIL = os.getenv("SMTP_EMAIL")
+SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
+RECEIVER_EMAIL = os.getenv("RECEIVER_EMAIL")
+
+# For Google Sheets
+GOOGLE_CREDS_JSON = os.getenv("GOOGLE_CREDS_JSON")
 
 try:
-    GOOGLE_CREDS_JSON = os.getenv("GOOGLE_CREDS_JSON", "")
-    if GOOGLE_CREDS_JSON:
-        GOOGLE_CREDS_DICT = json.loads(GOOGLE_CREDS_JSON)
-    else:
-        print("[WARNING] GOOGLE_CREDS_JSON is missing or empty.")
+    GOOGLE_CREDS_DICT = json.loads(GOOGLE_CREDS_JSON)
 except Exception as e:
     print(f"[ERROR] Failed to parse GOOGLE_CREDS_JSON: {e}")
-    GOOGLE_CREDS_DICT = {}
+    GOOGLE_CREDS_DICT = None
